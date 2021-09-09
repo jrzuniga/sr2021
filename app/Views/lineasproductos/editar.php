@@ -3,13 +3,15 @@
                     <div class="container-fluid px-4">
                         <h4 class="mt-4"> <?php echo $titulo; ?></h4>
 
-                        <form method="POST" action="<?php echo base_url(); ?>/lineasproductos/insertar" 
+                        <form method="POST" action="<?php echo base_url(); ?>/lineasproductos/actualizar" 
                         autocomplete="off">
+                        <input type="hidden" value="<?php echo $datos['id']; ?>" name="id" />
                             <div class="form_group">
                                 <div class="row">
                                     <div class="col-12 col-sm-6">
                                         <label>Nombre</label>
                                         <input class="form-control" id="nombre" name="nombre" type="text"
+                                        value="<?php echo $datos['NombreLinea']; ?>"
                                         autofocus required
                                         placeholder="Nombre de la línea"/>
                                     </div>

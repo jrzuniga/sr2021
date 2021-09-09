@@ -12,19 +12,20 @@ use App\Controllers\BaseController;
 class Lineasproductos extends  BaseController
 
 {
-    protected $lineaproductos;
+    protected $lineasproductos;
 
     public function __construct()
     {
         
-        $this->lineaproductos = new LineasproductosModel();
+        $this->lineasproductos = new LineasproductosModel();
  
     }
 
     public function index( $activo=1)
     {
-        $lineaproductos = $this->lineaproductos->select()->findAll();
-        $data = [ 'titulo' =>'Líneas de Productos', 'datos' => $lineaproductos];
+        
+        $lineasproductos = $this->lineasproductos->where('activo',$activo)->findAll();
+        $data = [ 'titulo' =>'Líneas de Productos', 'datos' => $lineasproductos];
 
         echo view ('header');
         echo view ('lineasproductos/lineasproductos', $data);
@@ -34,9 +35,9 @@ class Lineasproductos extends  BaseController
 
     public function nuevo()
     {
-        $data = [ 'titulo' =>'Agregar unidad'];
+        $data = [ 'titulo' =>'Agregar Líneas'];
         echo view ('header');
-        echo view ('lineaproductos/nuevo', $data);
+        echo view ('lineasproductos/nuevo', $data);
         echo view ('footer');
 
     }
@@ -44,19 +45,17 @@ class Lineasproductos extends  BaseController
     public function insertar()
     {
 
-        $this->lineaproductos->save(['nombre' => $this->request->getPost('nombre'),
-        'nombre_corto' => $this->request->getPost('nombre_corto')  ]);
-        return redirect()->to(base_url().'/lineaproductos');
-
+        $this->lineasproductos->save(['NombreLinea' => $this->request->getPost('nombre') ]);
+        return redirect()->to(base_url().'/lineasproductos');
 
     }
 
     public function editar($id)
     {
-        $unidad = $this->lineaproductos->where('id',$id)->first();
-        $data = [ 'titulo' =>'Editar unidad ', 'datos' => $unidad];
+        $unidad = $this->lineasproductos->where('id',$id)->first();
+        $data = [ 'titulo' =>'Editar', 'datos' => $unidad];
         echo view ('header');
-        echo view ('lineaproductos/editar', $data);
+        echo view ('lineasproductos/editar', $data);
         echo view ('footer');
 
     }
@@ -64,10 +63,11 @@ class Lineasproductos extends  BaseController
     public function actualizar()
     {
 
-        $this->lineaproductos->update($this->request->getPost('id'),
-        ['nombre' => $this->request->getPost('nombre'),
-        'nombre_corto' => $this->request->getPost('nombre_corto')  ]);
-        return redirect()->to(base_url().'/lineaproductos');
+        $this->lineasproductos->update($this->request->getPost('id'),
+        ['NombreLinea' => $this->request->getPost('nombre')  ]);
+        
+        return redirect()->to(base_url().'/lineasproductos');
+        
 
 
     }
@@ -75,9 +75,9 @@ class Lineasproductos extends  BaseController
     public function eliminar($id)
     {
 
-        $this->lineaproductos->update($id,   ['activo' =>0]) ;
+        $this->lineasproductos->update($id,   ['activo' =>0]) ;
         
-        return redirect()->to(base_url().'/lineaproductos');
+        return redirect()->to(base_url().'/lineasproductos');
 
 
     }
@@ -85,20 +85,20 @@ class Lineasproductos extends  BaseController
     public function activar($id)
     {
 
-        $this->lineaproductos->update($id,   ['activo' =>1]) ;
+        $this->lineasproductos->update($id,   ['activo' =>1]) ;
         
-        return redirect()->to(base_url().'/lineaproductos');
+        return redirect()->to(base_url().'/lineasproductos');
 
 
     }
 
     public function eliminados( $activo=0)
     {
-        $lineaproductos = $this->lineaproductos->where('activo',$activo)->findAll();
-        $data = [ 'titulo' =>'lineaproductos desactivadas', 'datos' => $lineaproductos];
+        $lineasproductos = $this->lineasproductos->where('activo',$activo)->findAll();
+        $data = [ 'titulo' =>'lineasproductos desactivadas', 'datos' => $lineasproductos];
 
         echo view ('header');
-        echo view ('lineaproductos/eliminados', $data);
+        echo view ('lineasproductos/eliminados', $data);
         echo view ('footer');
 
     }
@@ -108,11 +108,11 @@ class Lineasproductos extends  BaseController
         $filtro = array('Distribuidor' => $proveedor, 'Categoria' => $categoria);
         $productos = $this->productos->where($filtro)->findAll();
         #$productos = $this->productos->where('Distribuidor', $proveedor)->findAll();
-        $proveedor = $this->lineaproductos->where('id', $proveedor)->first();
+        $proveedor = $this->lineasproductos->where('id', $proveedor)->first();
         $data = [ 'titulo' =>'Lista de productos ', 'datos' => $productos, 'proveedor' => $proveedor];
 
         echo view ('header');
-        echo view ('lineaproductos/productos', $data);
+        echo view ('lineasproductos/productos', $data);
         echo view ('footer');
 
     }
@@ -123,7 +123,7 @@ class Lineasproductos extends  BaseController
         #$detalleitem = $this->detalleproducto->where('id', $item)->findAll();
         $detalleitem = $this->detalleproducto->select("mp.*, d.Nombre")
         ->from("movimientosproductos as mp")
-        ->join("lineaproductos as d", "d.id=mp.Distribuidor")
+        ->join("lineasproductos as d", "d.id=mp.Distribuidor")
         ->where("mp.id", $item)->findAll();
         
 
@@ -132,7 +132,7 @@ class Lineasproductos extends  BaseController
         $data = [ 'titulo' =>'Historial del producto ', 'datos' => $detalleitem, 'item'=> $item];
 
         echo view ('header');
-        echo view ('lineaproductos/detalleproducto', $data);
+        echo view ('lineasproductos/detalleproducto', $data);
         echo view ('footer');
 
     }

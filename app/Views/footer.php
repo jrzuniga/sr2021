@@ -49,9 +49,7 @@
 
     <!-- Custom scripts for all pages SB-ADMIN 2-->
     <script src="<?php echo base_url();?>/js/sb-admin-2.min.js"></script> 
-    <!-- Custom scripts for all pages SB-ADMIN>
-    <!-- <script src="<?php echo base_url();?>/js/scripts.js"></script> -->
-
+    
     <!-- Page level plugins -->
     <script src="<?php echo base_url();?>/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url();?>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
@@ -59,9 +57,7 @@
     <!-- Page level custom scripts SB ADMIN 2-->
     <script src="<?php echo base_url();?>/js/demo/datatables-demo.js"></script> 
 
-    <!-- Page level custom scripts SB ADMIN -->
-    <!-- <script src="<?php echo base_url();?>/js/datatables-simple-demo.js"></script> -->
-
+    
 </body>
 
 </html>

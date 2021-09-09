@@ -14,9 +14,9 @@ class LineasproductosModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = false; //Eliminación de filas
 
-    protected $allowedFields = ['Nombre_Linea'];
+    protected $allowedFields = ['NombreLinea','activo'];
 
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     
     protected $validationRules    = [];
     protected $validationMessages = [];
